@@ -1,0 +1,9 @@
+# Archivos y carpetas personales
+Archivos_personales/
+**/Archivos_personales/
+
+# Archivos del sistema y temporales comunes
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
