@@ -1,0 +1,43 @@
+name: "Característica de calidad"
+description: "Registrar una característica de calidad de producto seleccionada (Entrega 2, Paso 1, ítem 2)"
+title: "[CAR-XX] "
+projects: ["Calidad-Software-UNAL-2026-2/12"]
+labels: ["tipo:caracteristica-calidad"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        *Este issue es el **padre** de las medidas de esta característica (mínimo dos). La relación se crea desde cada medida: abre el issue `[MED-XX]` → panel derecho, **Relationships** → **Add parent** → busca este issue `[CAR-XX]`.*
+        *Recuerda: asigna (Assignees, panel derecho) al integrante responsable de esta característica.*
+  - type: dropdown
+    id: caracteristica
+    attributes:
+      label: Característica (ISO/IEC 25010:2011)
+      description: Selecciona la característica de calidad de producto que registra este issue.
+      options:
+        - Adecuación funcional
+        - Eficiencia de desempeño
+        - Compatibilidad
+        - Usabilidad
+        - Fiabilidad
+        - Seguridad
+        - Mantenibilidad
+        - Portabilidad
+    validations:
+      required: true
+  - type: textarea
+    id: definicion
+    attributes:
+      label: Definición adaptada al dominio
+      description: ¿Qué significa esta característica en tu proyecto, con sus actores y su contexto?
+    validations:
+      required: true
+  - type: textarea
+    id: motivacion
+    attributes:
+      label: Necesidades o RNF que la motivan
+      description: |
+        Enlaza los RNF escribiendo su número precedido de # y describe las necesidades implícitas que identificaron.
+        Ojo: el formulario de RNF de la Entrega 1 no usaba exactamente los nombres de la norma. Ubica cada RNF en la característica de la ISO/IEC 25010:2011 que corresponda.
+    validations:
+      required: true

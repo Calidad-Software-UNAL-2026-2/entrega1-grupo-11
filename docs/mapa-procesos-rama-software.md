@@ -1,16 +1,23 @@
-## Rama Software / Backend
+## Rama Plataforma y App Móvil
 
-### Proceso: Desarrollo de API y backend de ingesta de datos
+### Proceso: Definición del diseño, rama plataforma y app (6.4.5)
 
-- **Entradas:** Protocolo de comunicación acordado con el equipo de Hardware (decisión de diseño temprana, no una dependencia de CI); requisitos de interfaz (Paso 2)
-- **Actividades:** Diseño del endpoint de ingesta, implementación del backend, definición del esquema de la base de datos de telemetría
-- **Salidas:** API de ingesta desplegada en entorno de pruebas; esquema de base de datos
-- **Recursos:** Framework backend elegido por el equipo, base de datos de series de tiempo, entorno de pruebas
+- **Entradas:** Arquitectura del sistema; RF y RNF de los módulos MOD-01 a MOD-06; requisitos de interfaz (02e)
+- **Actividades:** Diseñar los servicios de la plataforma, base de datos, motor de alertas y las pantallas/navegación de la app móvil
+- **Salidas:** Diseño de la plataforma y de la app
+- **Recursos:** Equipo de desarrollo de plataforma y app; React Native; herramienta de prototipos de interfaz
 
-### Proceso: Desarrollo del dashboard de monitoreo
+### Proceso: Implementación, rama plataforma y app (6.4.7)
 
-- **Entradas:** API de ingesta (proceso anterior); requisitos funcionales de visualización (Paso 2)
-- **Actividades:** Diseño de las vistas de monitoreo, consumo de la API, despliegue del dashboard
-- **Salidas:** Dashboard funcional en entorno de pruebas
-- **Recursos:** Framework frontend elegido por el equipo, librería de gráficos
+- **Entradas:** Diseño de la plataforma y de la app
+- **Actividades:** Preparar la implementación; construir el backend y la app móvil; gestionar versiones y defectos
+- **Salidas:** Plataforma y app construidas y versionadas
+- **Recursos:** React Native; framework del backend; servicios externos de mapas, notificaciones y correo; Git
+
+### Proceso: Verificación, rama plataforma y app (6.4.9)
+
+- **Entradas:** Plataforma y app construidas; RF y RNF de la plataforma y la app
+- **Actividades:** Verificar criterios de aceptación de los RF, tiempo de carga de 3 s, respuesta de 2 s y compatibilidad en matriz de teléfonos
+- **Salidas:** Plataforma y app verificadas; reporte de verificación; defectos registrados
+- **Recursos:** Entorno de pruebas; matriz de teléfonos (RNF-15); herramientas de pruebas automatizadas
 

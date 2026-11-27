@@ -1,62 +1,97 @@
-# Mapa de Procesos y Modelo de Ciclo de Vida
+# Mapa de Procesos y Modelo de Ciclo de Vida — PetTracker
 
-> Generado con el workflow paralelo: Requisitos se ejecuta primero;
-> luego la rama de Hardware/Firmware (3 procesos) y la rama de
-> Software/Backend (2 procesos) se ejecutan de forma simultánea; al
-> final, Integración y despliegue une ambas ramas a este documento.
-> La definición formal del modelo de ciclo de vida se documenta en
-> la wiki, página `04c-Modelo-Ciclo-Vida`, no en este archivo.
+> Generado con el workflow paralelo: se ejecuta el flujo inicial de
+> definición (6.4.2 → 6.4.3 → 6.4.4); luego la rama de Firmware (3
+> procesos) y la rama de Plataforma y App (3 procesos) se ejecutan de
+> forma simultánea; al final, Integración, Validación y Transición
+> unen ambas ramas y cierran el flujo. La definición formal del modelo
+> de ciclo de vida se documenta en la wiki, página `04c-Modelo-Ciclo-Vida`.
 
-## Proceso: Requisitos
+## Proceso: Definición de necesidades y requisitos de los interesados (6.4.2)
 
-- **Entradas:** Modelo verbal extendido, necesidades de negocio e interesados
-- **Actividades:** Elicitación, análisis y especificación de requisitos, tanto para el dispositivo (Hardware) como para la plataforma (Software)
-- **Salidas:** Documento de especificación de requisitos
-- **Recursos:** BABOK v3, entrevistas/supuestos del equipo
+- **Entradas:** Modelo verbal (RFP); extensión del modelo verbal (Paso 1)
+- **Actividades:** Preparar la definición; identificar actores y definir sus necesidades; desarrollar el concepto de operación; transformar las necesidades en requisitos de los interesados; analizarlos
+- **Salidas:** Actores (02b); necesidades de negocio (02c); necesidades de los interesados (02d)
+- **Recursos:** BABOK v3; equipo; wiki
 
-## Rama Hardware / Firmware
+## Proceso: Definición de requisitos del sistema/software (6.4.3)
 
-### Proceso: Diseño de hardware y selección de componentes
+- **Entradas:** Necesidades de negocio y de los interesados (02c, 02d)
+- **Actividades:** Preparar la definición; definir los requisitos funcionales (historias de usuario con criterios de aceptación), no funcionales (con métrica y umbral) y de interfaz; analizarlos; gestionarlos con trazabilidad
+- **Salidas:** Módulos, RF y RNF como issues; requisitos de interfaz (02e); vista "Registro de Requisitos"
+- **Recursos:** BABOK v3; formularios de issues; GitHub Project
 
-- **Entradas:** Requisitos funcionales de sensado/actuación; restricciones de consumo energético y costo
-- **Actividades:** Selección de sensores y actuadores, diseño del esquemático y la PCB, definición de la arquitectura eléctrica del dispositivo
-- **Salidas:** Esquemático aprobado, lista de materiales (BOM), prototipo de placa
-- **Recursos:** Software de diseño electrónico (KiCad/Altium), catálogo de componentes, datasheets de fabricantes
+## Proceso: Definición de la arquitectura (6.4.4)
 
-### Proceso: Desarrollo de firmware
+- **Entradas:** Requisitos del sistema/software; requisitos de interfaz (02e); especificaciones del collar adquirido; resultados del análisis del sistema (6.4.6)
+- **Actividades:** Preparar la definición de la arquitectura; definir puntos de vista relevantes (dispositivo, comunicación, datos, seguridad); desarrollar y evaluar arquitecturas candidatas; relacionar la arquitectura con el diseño
+- **Salidas:** Arquitectura del sistema (componentes, interfaces y protocolo entre collar y plataforma); decisiones de seguridad y privacidad
+- **Recursos:** Arquitecto de software del equipo; herramienta libre de diagramas
 
-- **Entradas:** Esquemático y BOM aprobados (proceso anterior); requisitos funcionales de sensado/actuación
-- **Actividades:** Programación del microcontrolador, implementación de drivers de sensores, integración del protocolo de comunicación (LoRaWAN)
-- **Salidas:** Firmware compilado y versionado; documentación de pines y del protocolo usado
-- **Recursos:** IDE de firmware (Arduino), kit de desarrollo del microcontrolador, especificación del protocolo elegido
+## Rama Firmware (Collar IoT)
 
-### Proceso: Pruebas de integración hardware
+### Proceso: Definición del diseño, rama firmware (6.4.5)
 
-- **Entradas:** Prototipo de placa (proceso 1); firmware compilado (proceso 2)
-- **Actividades:** Pruebas de banco (consumo eléctrico, rango de sensado, estabilidad de la comunicación), ajustes de calibración
-- **Salidas:** Reporte de pruebas de hardware; lista de defectos y ajustes de calibración
-- **Recursos:** Banco de pruebas, multímetro/osciloscopio, dispositivo prototipo
+- **Entradas:** Arquitectura del sistema; especificaciones del collar adquirido; RF-12, RF-13, RF-14, RF-16, RF-17; RNF-01, RNF-02, RNF-04
+- **Actividades:** Preparar el diseño del firmware; diseñar ciclo de reporte normal y de ahorro, almacenamiento en memoria local (180 registros), sincronización por lotes y actualización remota
+- **Salidas:** Diseño del firmware
+- **Recursos:** Responsable de firmware; documentación técnica del collar
 
-## Rama Software / Backend
+### Proceso: Implementación, rama firmware (6.4.7)
 
-### Proceso: Desarrollo de API y backend de ingesta de datos
+- **Entradas:** Diseño del firmware; kit de desarrollo del collar
+- **Actividades:** Preparar la implementación; programar el firmware; gestionar versiones compiladas y defectos encontrados
+- **Salidas:** Firmware compilado y versionado
+- **Recursos:** Entorno de desarrollo del fabricante del collar; Git
 
-- **Entradas:** Protocolo de comunicación acordado con el equipo de Hardware (decisión de diseño temprana, no una dependencia de CI); requisitos de interfaz (Paso 2)
-- **Actividades:** Diseño del endpoint de ingesta, implementación del backend, definición del esquema de la base de datos de telemetría
-- **Salidas:** API de ingesta desplegada en entorno de pruebas; esquema de base de datos
-- **Recursos:** Framework backend elegido por el equipo, base de datos de series de tiempo, entorno de pruebas
+### Proceso: Verificación, rama firmware (6.4.9)
 
-### Proceso: Desarrollo del dashboard de monitoreo
+- **Entradas:** Firmware compilado; requisitos del firmware (RF y RNF del collar)
+- **Actividades:** Preparar casos de prueba; verificar consumo en modo normal y de ahorro, almacenamiento de 180 registros sin pérdida y sincronización al recuperar la red
+- **Salidas:** Firmware verificado; reporte de verificación; defectos registrados
+- **Recursos:** Collares de prueba del proveedor; simulación de pérdida de cobertura
 
-- **Entradas:** API de ingesta (proceso anterior); requisitos funcionales de visualización (Paso 2)
-- **Actividades:** Diseño de las vistas de monitoreo, consumo de la API, despliegue del dashboard
-- **Salidas:** Dashboard funcional en entorno de pruebas
-- **Recursos:** Framework frontend elegido por el equipo, librería de gráficos
+## Rama Plataforma y App Móvil
 
-## Proceso: Integración y despliegue
+### Proceso: Definición del diseño, rama plataforma y app (6.4.5)
 
-- **Entradas:** Firmware probado y reporte de pruebas de hardware (rama Hardware); dashboard funcional en entorno de pruebas (rama Software)
-- **Actividades:** Conexión del dispositivo físico al backend desplegado, validación end-to-end del flujo de datos (sensor → firmware → API → dashboard), ajustes finales de configuración
-- **Salidas:** Sistema IoT integrado y validado end-to-end
-- **Recursos:** Dispositivo prototipo, entorno de backend/dashboard desplegado, plan de pruebas de integración
+- **Entradas:** Arquitectura del sistema; RF y RNF de los módulos MOD-01 a MOD-06; requisitos de interfaz (02e)
+- **Actividades:** Diseñar los servicios de la plataforma, base de datos, motor de alertas y las pantallas/navegación de la app móvil
+- **Salidas:** Diseño de la plataforma y de la app
+- **Recursos:** Equipo de desarrollo de plataforma y app; React Native; herramienta de prototipos de interfaz
+
+### Proceso: Implementación, rama plataforma y app (6.4.7)
+
+- **Entradas:** Diseño de la plataforma y de la app
+- **Actividades:** Preparar la implementación; construir el backend y la app móvil; gestionar versiones y defectos
+- **Salidas:** Plataforma y app construidas y versionadas
+- **Recursos:** React Native; framework del backend; servicios externos de mapas, notificaciones y correo; Git
+
+### Proceso: Verificación, rama plataforma y app (6.4.9)
+
+- **Entradas:** Plataforma y app construidas; RF y RNF de la plataforma y la app
+- **Actividades:** Verificar criterios de aceptación de los RF, tiempo de carga de 3 s, respuesta de 2 s y compatibilidad en matriz de teléfonos
+- **Salidas:** Plataforma y app verificadas; reporte de verificación; defectos registrados
+- **Recursos:** Entorno de pruebas; matriz de teléfonos (RNF-15); herramientas de pruebas automatizadas
+
+## Proceso: Integración (6.4.8)
+
+- **Entradas:** Firmware verificado; plataforma y app verificadas; collares aceptados (6.1.1)
+- **Actividades:** Preparar la integración; integrar paso a paso el firmware en el collar, el collar con la plataforma por red móvil y la plataforma con la app
+- **Salidas:** Sistema completo integrado; reporte de integración
+- **Recursos:** Collares del proveedor; plataforma en entorno de pruebas; teléfonos de prueba
+
+## Proceso: Validación (6.4.11)
+
+- **Entradas:** Sistema integrado; necesidades de los interesados (02d); RNF de usabilidad y precisión
+- **Actividades:** Preparar escenarios de uso real; validar con usuarios y mascotas (pruebas de campo en ciudad, prueba SUS con usuarios de varias edades, aceptación del cliente)
+- **Salidas:** Reporte de validación; aceptación del cliente
+- **Recursos:** Usuarios de prueba; mascotas con collar; cuestionario SUS; representante del cliente
+
+## Proceso: Transición (6.4.10)
+
+- **Entradas:** Sistema validado; aceptación del cliente
+- **Actividades:** Preparar la transición; desplegar la plataforma, publicar la app en Google Play y App Store, cargar el firmware en los collares y entregar documentación al cliente
+- **Salidas:** Sistema en producción; app publicada; acta de entrega
+- **Recursos:** Cuentas de desarrollador en las tiendas; infraestructura de producción; manuales de uso
 

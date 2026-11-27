@@ -1,0 +1,105 @@
+name: "Medida de calidad de producto"
+description: "Registrar una medida de la ISO/IEC 25023 adaptada al proyecto (Entrega 2, Paso 1, ítem 3)"
+title: "[MED-XX] <Subcaracterística>: <nombre de la medida>"
+projects: ["Calidad-Software-UNAL-2026-2/12"]
+labels: ["tipo:medida-producto"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        *Después de crear este issue: (1) asócialo a su característica: panel derecho, **Relationships** → **Add parent** → busca el issue `[CAR-XX]`; (2) agrégale el label `origen:rnf` o `origen:implicita` (panel derecho → **Labels**).*
+  - type: dropdown
+    id: subcaracteristica
+    attributes:
+      label: Subcaracterística (ISO/IEC 25010:2011)
+      options:
+        - "Adecuación funcional › Completitud funcional"
+        - "Adecuación funcional › Corrección funcional"
+        - "Adecuación funcional › Pertinencia funcional"
+        - "Eficiencia de desempeño › Comportamiento temporal"
+        - "Eficiencia de desempeño › Utilización de recursos"
+        - "Eficiencia de desempeño › Capacidad"
+        - "Compatibilidad › Coexistencia"
+        - "Compatibilidad › Interoperabilidad"
+        - "Usabilidad › Reconocibilidad de la adecuación"
+        - "Usabilidad › Aprendibilidad"
+        - "Usabilidad › Operabilidad"
+        - "Usabilidad › Protección contra errores de usuario"
+        - "Usabilidad › Estética de la interfaz de usuario"
+        - "Usabilidad › Accesibilidad"
+        - "Fiabilidad › Madurez"
+        - "Fiabilidad › Disponibilidad"
+        - "Fiabilidad › Tolerancia a fallos"
+        - "Fiabilidad › Recuperabilidad"
+        - "Seguridad › Confidencialidad"
+        - "Seguridad › Integridad"
+        - "Seguridad › No repudio"
+        - "Seguridad › Responsabilidad"
+        - "Seguridad › Autenticidad"
+        - "Mantenibilidad › Modularidad"
+        - "Mantenibilidad › Reusabilidad"
+        - "Mantenibilidad › Analizabilidad"
+        - "Mantenibilidad › Modificabilidad"
+        - "Mantenibilidad › Capacidad de prueba"
+        - "Portabilidad › Adaptabilidad"
+        - "Portabilidad › Capacidad de instalación"
+        - "Portabilidad › Capacidad de reemplazo"
+    validations:
+      required: true
+  - type: textarea
+    id: objetivo
+    attributes:
+      label: Objetivo GQM
+      description: Una oración con la plantilla de Basili. El foco es la subcaracterística y el punto de vista es un actor o parte interesada de la Entrega 1.
+      placeholder: "Analizar [el sistema o módulo] con el propósito de evaluarlo con respecto a [subcaracterística], desde el punto de vista de [actor o parte interesada], en el contexto de [dominio]."
+    validations:
+      required: true
+  - type: input
+    id: medida-referencia
+    attributes:
+      label: Medida de referencia (ISO/IEC 25023:2016)
+      description: Código y nombre de la medida en la norma.
+      placeholder: "Ej: FCp-1-G — Functional coverage"
+    validations:
+      required: true
+  - type: textarea
+    id: pregunta
+    attributes:
+      label: Pregunta adaptada al dominio
+      description: La descripción de la medida en la norma (planteada como pregunta), reformulada para tu proyecto.
+    validations:
+      required: true
+  - type: textarea
+    id: metrica
+    attributes:
+      label: Métrica y definición operativa
+      description: Función de medición adaptada al dominio y, para cada elemento, su definición operativa (qué se cuenta, de dónde sale el dato y cuándo se recolectaría).
+      placeholder: |
+        X = A / B
+        A = ...
+        B = ...
+        Fuente del dato: ...
+        Momento de recolección: ...
+    validations:
+      required: true
+  - type: dropdown
+    id: escala
+    attributes:
+      label: Escala
+      options: [Nominal, Ordinal, Intervalo, Razón]
+    validations:
+      required: true
+  - type: textarea
+    id: umbral
+    attributes:
+      label: Umbral y justificación
+      description: Valor aceptable y de dónde sale (RNF, dominio o referente externo). La norma no fija umbrales.
+    validations:
+      required: true
+  - type: input
+    id: rnf-origen
+    attributes:
+      label: RNF de origen
+      description: Número del RNF precedido de # (GitHub enlaza ambos issues). Si la medida no proviene de ningún RNF, escribe "Necesidad implícita".
+    validations:
+      required: true
